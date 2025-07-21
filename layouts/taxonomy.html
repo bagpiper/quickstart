@@ -1,0 +1,10 @@
+{{ define "main" }}
+<h1 style="color: rgb(57, 7, 101);">🚨 taxonomy.html LOADED</h1>
+<p>Kind: {{ .Kind }} | Type: {{ .Type }}</p>
+
+  <h1 class="font-black text-7xl text-blue-800 text-center  my-20 mx-auto">TAX {{ .Title }}</h1>
+  {{ .Content }}
+  {{ range .Pages }}
+    <h2 class="font-black text-3xl text-red-800 text-center my-20 mx-auto"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+  {{ end }}
+{{ end }}

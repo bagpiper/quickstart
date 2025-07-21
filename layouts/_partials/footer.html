@@ -1,0 +1,29 @@
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <!-- Section navigation links -->
+    <div class="container mx-auto px-4 py-4 text-sm flex flex-wrap gap-4 justify-center">
+      <a href="{{ "/" | relURL }}" class="text-blue-600 hover:underline">Home</a>
+      {{ range .Site.Sections }}
+        <a href="{{ .Permalink }}" class="text-gray-700 hover:text-blue-600 hover:underline">
+          {{ .Title }}
+        </a>
+      {{ end }}
+    </div>
+  
+    <!-- Taxonomy navigation links -->
+    <div class="bg-gray-50 border-t border-gray-100">
+      <div class="container mx-auto px-4 py-3 text-xs text-center text-gray-600 flex flex-wrap gap-3 justify-center">
+        {{ range $taxonomy, $_ := .Site.Taxonomies }}
+          <a href="{{ (printf "/%s/" $taxonomy) | relURL }}" class="hover:underline">
+            {{ humanize $taxonomy }}
+          </a>
+        {{ end }}
+      </div>
+    </div>
+  
+    <!-- Copyright -->
+    <div class="text-center text-xs text-gray-400 py-3">
+        Copyright &copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.
+    </div>
+    {{ partial "template-call-stack.html" . }}
+  </footer>
+

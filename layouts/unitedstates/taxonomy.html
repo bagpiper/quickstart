@@ -1,0 +1,20 @@
+
+
+{{ define "main" }}
+<!-- layouts/unitedstates/taxonomy.html -->
+<h1 style="color: red;">✅ /unitedstates/taxonomy.html (standalone)</h1>
+<p>Kind: {{ .Kind }} | Type: {{ .Type }} | Section: {{ .Section }}</p>
+
+
+  <h1 class="font-black text-7xl text-purple-800 text-center  my-20 mx-auto">{{ .Title }}</h1>
+  <div class="bg-green-300 p-8 mx-auto">
+    {{ .Content }}
+  </div>
+  <div class="bg-green-300 p-8 mx-auto"> 
+  {{ range .Pages }}
+    <h2 class="font-black text-3xl text-purple-800 text-center  my-20 mx-auto">
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    </h2>
+  {{ end }}
+</div>
+{{ end }}

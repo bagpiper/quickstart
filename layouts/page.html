@@ -1,0 +1,12 @@
+{{ define "main" }}
+  {{ if site.Params.debug }}
+    <div class="debug">[entering {{ templates.Current.Filename }}]</div>
+  {{ end }}
+
+  <h1 class="font-black text-7xl text-purple-800 text-center  my-20 mx-auto">{{ .Title }}</h1>
+  {{ .Content }}
+
+  {{ if site.Params.debug }}
+    <div class="debug">[leaving {{ templates.Current.Filename }}]</div>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,30 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+    <meta name="description" content="{{ .Site.Params.description | default "Test Hugo site with Tailwind CDN" }}">
+  
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  
+    <!-- Optional: Tailwind config override (for debugging or theming) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              debug: '#ff00ff',
+            }
+          }
+        }
+      };
+    </script>
+  
+    <!-- Optional: Debug style helper -->
+    <style>
+      .debug-border * {
+        outline: 1px solid red;
+      }
+    </style>
+  </head>

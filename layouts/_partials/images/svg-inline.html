@@ -1,0 +1,24 @@
+{{/* svg-inline.html */}}
+
+{{ $src := .Src }}
+{{ $class := .Class | default "" }}
+{{ $svg := readFile $src }}
+{{ $svg = replaceRE `<svg([^>]*)>` (printf `<svg$1 class="%s">` $class) $svg }}
+{{ $svg | safeHTML }}
+
+{{ $path := cond (hasPrefix $src "/") (substr $src 1) $src }}
+{{ $res := resources.Get $path }}
+
+{{ if $res }}
+  {{ if eq $res.MediaType.SubType "svg" }}
+    <span class="{{ $class }}">
+      {{ $res.Content | safeHTML }}
+    </span>
+  {{ else }}
+    {{ warnf "File %s is not an SVG — found: %s" $src $res.MediaType.SubType }}
+    <span class="text-red-500">Not SVG</span>
+  {{ end }}
+{{ else }}
+  {{ warnf "SVG file not found: %s" $src }}
+  <span class="text-red-500">Missing: {{ $src }}</span>
+{{ end }}

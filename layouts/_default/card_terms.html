@@ -1,0 +1,70 @@
+<div class="bg-light shadow-lg border border-border overflow-hidden flex flex-col md:flex-row h-full mb-8">
+  <!-- Left Column (Image) -->
+  <div class="md:w-1/3 w-full flex-shrink-0">
+    {{ partial "image-card" (dict
+      "Src" (default "images/fallback.webp" .Params.image)
+      "Alt" .Title
+      "Class" "bg-dark w-full h-full object-cover"
+      "Ratio" "aspect-[1/1]"
+    ) }}
+  </div>
+
+  <!-- Right Column (Text Content) -->
+
+  <div class="flex flex-col justify-between flex-grow p-4 md:w-2/3">
+   <!-- Meta Row: Locations (left), Categories (right) -->
+
+<div class="flex justify-between items-center mb-2 gap-2 flex-wrap">
+  <!-- Post Location -->
+<div class="text-sm text-text capitalize flex items-center">
+ {{ delimit (or .Params.locations (slice)) ", " }}
+</div>
+
+  <!-- Categories (align right) -->
+  {{ $categories := .Params.categories }}
+  {{ if $categories }}
+    <ul class="flex flex-wrap gap-2 mb-0 ml-auto">
+      <li class="inline-block">
+        <i class="fa-regular text-ash-400 fa-folder mr-1"></i>
+        {{ range $i, $cat := $categories }}
+          <a
+            href="{{ "categories/" | relLangURL }}{{ $cat | urlize | lower }}/"
+            class="ms-1 hover:text-secondary hover:underline">
+            {{ $cat | humanize }}{{ if ne $i (sub (len $categories) 1) }},{{ end }}
+          </a>
+        {{ end }}
+      </li>
+    </ul>
+  {{ end }}
+</div>
+
+    <!-- Title -->
+    <h4 class="mb-3 font-semibold text-2xl text-text leading-snug">
+      <a href="{{ .RelPermalink }}" class="capitalize hover:text-secondary hover:underline">
+        {{ .Title }}
+      </a>
+    </h4>
+
+    <!-- Summary -->
+    <p class="mb-6 text-sm text-text">
+      {{ .Summary | plainify }}
+    </p>
+
+ <!-- Read More Button -->
+
+ <div class="flex justify-between items-center mb-2 gap-2 flex-wrap">
+  <!-- Date Location -->
+   <div class="text-sm text-text flex items-center">
+    <i class="fa-regular fa-clock text-ash-400  mr-1"></i>
+    {{ .PublishDate.Format "January 2, 2006" }} 
+  </div>
+
+
+<div class="flex justify-end">
+  <a href="{{ .RelPermalink }}" class="inline-block px-4 py-2 bg-primary text-white rounded-md text-sm font-semibold hover:bg-secondary border border-border transition">
+    Read More
+  </a>
+</div>
+</div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<section>
+  <div class="container mt-8 text-center">
+
+      {{ if not .IsHome }}
+        {{ partial "custom/breadcrumb" (dict "Context" . "Class" "mb-8") }}
+      {{ end }}
+
+      {{/* ✅ Compute pretty name from data */}}
+      {{ $countryNames := site.Data.countrynames }}
+      {{ $slug := .Title | urlize }}
+      {{ $pretty := index $countryNames $slug | default (T (printf "%s" (lower .Title)) | default .Title | title) }}
+
+      <h1 class="font-bold text-text {{ if .IsHome }}text-5xl{{ else }}text-5xl{{ end }} max-w-full sm:max-w-3xl mx-auto sm:whitespace-normal">
+        {{ replace $pretty "Celtic Calendar" "Calendar" }}
+      </h1>
+      
+
+      <h2 class="sr-only">
+        Section: {{ .Title }}
+      </h2>
+
+      {{ with .Params.description }}
+        <h2 id="title" class="hidden sm:block text-text mt-4 capitalize leading-none text-center font-light tracking-tight">
+          {{ . }}
+        </h2>
+      {{ end }}
+
+      {{ if or .Params.eventdate .Params.eventdateend }}
+        <h3 class="text-text capitalize leading-none font-bold text-center tracking-tight my-4">
+          {{ with .Params.eventdate }}
+            {{ time . | time.Format "Mon, Jan 2, 2006" }}
+          {{ end }}
+          {{ with .Params.eventdateend }}
+            - {{ time . | time.Format "Mon, Jan 2, 2006" }}
+          {{ end }}
+        </h3>
+      {{ end }}
+
+  </div>
+
+  {{/*  <div class="container mt-12">
+    {{ partial "search-page.html" (dict "Context" . "Class" "") }}
+  </div>  */}}
+  
+</section>

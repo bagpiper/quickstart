@@ -1,0 +1,31 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "My New Hugo Site"
+
+# Enable clean URLs like /blog/post/ instead of /blog/post.html
+uglyURLs = false
+
+# Enable syntax highlighting for code blocks (optional)
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+
+# Enable detailed server output and disable Fast Render for full rebuilds
+disableFastRender = true
+verbose = true
+
+# Taxonomies
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  author = "authors"
+  series = "series"
+  link = "links"
+  unitedstates = "unitedstates"
+  country = "countries"
+  canada = "canada"
+  scotland = "scotland"
+
+# Optional: params for debug mode
+[params]
+  debug = true
+  description = "A Hugo site for testing layouts and sections"

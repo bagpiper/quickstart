@@ -1,0 +1,19 @@
+{{/* layouts/partials/svg-inline.html */}}
+
+{{ $src := .Src | default "" }}
+{{ $class := .Class | default "" }}
+
+/* Remove any leading slash for relative path */
+{{ $path := cond (hasPrefix $src "/") (substr $src 1) $src }}
+
+/* Adjust to static/ for safety */
+{{ $content := readFile (printf "static/%s" $path) }}
+
+{{ if $content }}
+  <span class="{{ $class }}">
+    {{ $content | safeHTML }}
+  </span>
+{{ else }}
+  {{ warnf "SVG file not found: %s" $src }}
+  <span class="text-red-500">Missing: {{ $src }}</span>
+{{ end }}

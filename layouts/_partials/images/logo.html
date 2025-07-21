@@ -1,0 +1,22 @@
+{{/* layouts/_partials/logo.html */}}
+
+{{ $light := site.Params.logo_svg_light | default "images/svg/default-logo.svg" }}
+{{ $dark := site.Params.logo_svg_dark | default "images/svg/default-logo-darkmode.svg" }}
+
+{{ $lightPath := strings.TrimPrefix "/" $light }}
+{{ $darkPath := strings.TrimPrefix "/" $dark }}
+
+{{ $lightRes := resources.Get $lightPath }}
+{{ $darkRes := resources.Get $darkPath }}
+
+{{ if $lightRes }}
+  <span class="block dark:hidden logo-wrapper">
+    {{ $lightRes.Content | safeHTML }}
+  </span>
+{{ end }}
+
+{{ if $darkRes }}
+  <span class="hidden dark:block logo-wrapper">
+    {{ $darkRes.Content | safeHTML }}
+  </span>
+{{ end }}

@@ -1,0 +1,19 @@
+{{ define "main" }}
+  {{ if eq .Kind "home" }}
+    {{ .Content }}
+    {{ range .Site.RegularPages }}
+      <h2 class="font-black text-3xl text-red-800 text-center my-20 mx-auto"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+    {{ end }}
+  {{ else if eq .Kind "page" }}
+    <h1 class="font-black text-7xl text-purple-800 text-center  my-20 mx-auto">{{ .Title }}</h1>
+    {{ .Content }}
+  {{ else if in (slice "section" "taxonomy" "term") .Kind }}
+    <h1 class="font-black text-7xl text-purple-800 text-center  my-20 mx-auto">{{ .Title }}</h1>
+    {{ .Content }}
+    {{ range .Pages }}
+      <h2 class="font-black text-3xl text-red-800 text-center my-20 mx-auto"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+    {{ end }}
+  {{ else }}
+    {{ errorf "Unsupported page kind: %s" .Kind }}
+  {{ end }}
+{{ end }}

@@ -1,0 +1,47 @@
+{{ $src := .Src | default "" }}
+{{ $alt := default "Image" .Alt }}
+{{ $class := .Class | default "" }}
+{{ $ratio := .Ratio | default "aspect-[4/3]" }}
+
+{{/* Choose fill size based on ratio */}}
+{{ $fillSize := "800x600" }}
+{{ if eq $ratio "aspect-[16/9]" }}{{ $fillSize = "800x450" }}
+{{ else if eq $ratio "aspect-[1/1]" }}{{ $fillSize = "600x600" }}
+{{ else if eq $ratio "aspect-[3/2]" }}{{ $fillSize = "750x500" }}
+{{ else if eq $ratio "aspect-[3/4]" }}{{ $fillSize = "600x800" }}
+{{ end }}
+
+{{ $image := "" }}
+{{ $width := "" }}
+{{ $height := "" }}
+{{ $isRemote := hasPrefix $src "http" }}
+
+{{ if $isRemote }}
+  {{ $image = $src }}
+{{ else }}
+  {{ with resources.Get $src }}
+    {{ $processed := .Fill (print $fillSize " center webp q75") }}
+    {{ $image = $processed.RelPermalink }}
+    {{ $width = $processed.Width }}
+    {{ $height = $processed.Height }}
+  {{ else }}
+    {{ if (fileExists (print "static/" $src)) }}
+      {{ $image = $src | relURL }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if $image }}
+  <img
+    src="{{ $image }}"
+    alt="{{ $alt }}"
+    loading="lazy"
+    decoding="async"
+    class="w-full {{ $ratio }} object-cover {{ $class }}"
+    {{ with $width }}width="{{ . }}"{{ end }}
+    {{ with $height }}height="{{ . }}"{{ end }}>
+{{ else }}
+  <div class="w-full {{ $ratio }} bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-xs text-gray-400 {{ $class }}">
+    Missing image
+  </div>
+{{ end }}

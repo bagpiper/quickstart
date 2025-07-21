@@ -1,0 +1,39 @@
+{{ define "main" }}
+
+<h1 class="font-black text-7xl text-blue-800 text-center  my-20 mx-auto">Home Page</h1>
+
+
+  {{ .Content }}
+  <h2 class="font-black text-3xl text-red-800 text-center my-20 mx-auto">Debug Regular Pages</h2>
+  <ul>
+    {{ range site.RegularPages }}
+      <li>{{ .RelPermalink }} — section: {{ .Section }}</li>
+    {{ end }}
+  </ul>
+<div class="bg-green-100 p-8 my-8 mx-auto"> 
+  <h2 class="font-black text-2xl text-red-800 my-8 mx-auto"><a href="/blog">Blog</a></h2>
+  <ul>
+    {{ $blogPages := where site.RegularPages "Section" "blog" }}
+    {{ if $blogPages }}
+      {{ range $blogPages }}
+      {{ .Render "card_terms" }}
+      {{ end }}
+    {{ else }}
+      <li>No blog posts found.</li>
+    {{ end }}
+  </ul>
+</div>
+<div class="bg-pink-100 p-8 my-8 mx-auto"> 
+  <h2 class="font-black text-2xl text-red-800 my-8 mx-auto"><a href="/news">News</a></h2>
+  <ul>
+    {{ $newsPages := where site.RegularPages "Section" "news" }}
+    {{ if $newsPages }}
+      {{ range $newsPages }}
+        {{ .Render "card_terms" }}
+      {{ end }}
+    {{ else }}
+      <li>No news posts found.</li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

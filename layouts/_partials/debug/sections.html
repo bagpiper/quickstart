@@ -1,0 +1,31 @@
+<!-- Sections List (with Pretty Names) -->
+<div class="mt-8 mb-2 sm:rounded-xl mx-auto">
+  <ul class="flex flex-wrap justify-center gap-4">
+    {{ $termNames := site.Data.termnames }}
+    {{ range .Site.Sections }}
+      {{ $slug := .Section | urlize }}
+      {{ $pretty := index $termNames $slug | default (.Title | default .Section | humanize | title) }}
+      <li class="bg-primary hover:underline hover:font-black hover:bg-ash text-white hover:text-white border border-border px-2 py-1 text-center rounded-xl inline-flex items-center">
+        <a class="capitalize" href="{{ .RelPermalink }}">
+          {{ $pretty }}
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+</div>
+
+<!-- Taxonomies List (with Pretty Names) -->
+<div class="mt-8 mb-2 sm:rounded-xl mx-auto">
+  <ul class="flex flex-wrap justify-center gap-4">
+    {{ $termNames := site.Data.termnames }}
+    {{ range $taxoName, $taxo := .Site.Taxonomies }}
+      {{ $taxoSlug := $taxoName | urlize }}
+      {{ $pretty := index $termNames $taxoSlug | default ($taxoName | humanize | title) }}
+      <li class="bg-secondary hover:underline hover:font-black hover:bg-ash text-white hover:text-white border border-border px-2 py-1 text-center rounded-xl inline-flex items-center">
+        <a class="capitalize" href="{{ (print "/" $taxoName "/" | relLangURL) }}">
+          {{ $pretty }}
+        </a>
+      </li>
+    {{ end }}
+  </ul>
+</div>

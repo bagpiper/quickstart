@@ -1,0 +1,12 @@
+{{ $image := .Params.image }}
+{{ if or (not $image) (eq $image "") }}
+  {{ $image = "/images/fallback/16x9/image.webp" }}
+{{ end }}
+  <div class="w-full max-w-3xl mx-auto mb-8 rounded-xl overflow-hidden shadow">
+    {{ partial "image-card" (dict
+      "Src" (.Params.image | default "images/fallback/16x9/image.webp")
+      "Alt" .Title
+      "Class" "rounded-xl"
+      "Ratio" "aspect-[16/9]"
+    ) }}
+  </div>
